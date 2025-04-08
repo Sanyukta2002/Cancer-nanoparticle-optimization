@@ -17,3 +17,6 @@ This project explores how cancer stem cells (CSCs) respond to nanoparticle-based
 
 Each simulation is scored based on:
 
+##Understanding Genetic Algorithm : https://www.datacamp.com/tutorial/genetic-algorithm-python
+Learn the basic of Genetic algo through this blog
+
