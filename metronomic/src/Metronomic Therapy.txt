@@ -1,0 +1,10 @@
+ Metronomic Therapy (Low-Dose, High-Frequency Strategy)
+
+Feature	Setting (Proposed)
+Dose Days	Every 2 days (e.g., Day 5, 7, 9, 11, ...)
+Dose Duration	240 minutes (same as baseline therapy)
+Dirichlet Value	0.3 – 0.4 (lower drug concentration per dose)
+Frequency	Repeated throughout simulation (metronomic scheduling)
+Effect Style	Continuous mild pressure to suppress growth & limit angiogenesis
+🧠 Interpretation:
+Metronomic therapy is designed not to eliminate all tumor cells at once but to apply sustained therapeutic pressure with low toxicity. By dosing frequently at sub-toxic levels, it:

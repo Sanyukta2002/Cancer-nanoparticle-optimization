@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/*
+###############################################################################
+# If you use PhysiCell in your project, please cite PhysiCell and the version #
+# number, such as below:                                                      #
+#                                                                             #
+# We implemented and solved the model using PhysiCell (Version x.y.z) [1].    #
+#                                                                             #
+# [1] A Ghaffarizadeh, R Heiland, SH Friedman, SM Mumenthaler, and P Macklin, #
+#     PhysiCell: an Open Source Physics-Based Cell Simulator for Multicellu-  #
+#     lar Systems, PLoS Comput. Biol. 14(2): e1005991, 2018                   #
+#     DOI: 10.1371/journal.pcbi.1005991                                       #
+#                                                                             #
+# See VERSION.txt or call get_PhysiCell_version() to get the current version  #
+#     x.y.z. Call display_citations() to get detailed information on all cite-#
+#     able software used in your PhysiCell application.                       #
+#                                                                             #
+# Because PhysiCell extensively uses BioFVM, we suggest you also cite BioFVM  #
+#     as below:                                                               #
+#                                                                             #
+# We implemented and solved the model using PhysiCell (Version x.y.z) [1],    #
+# with BioFVM [2] to solve the transport equations.                           #
+#                                                                             #
+# [1] A Ghaffarizadeh, R Heiland, SH Friedman, SM Mumenthaler, and P Macklin, #
+#     PhysiCell: an Open Source Physics-Based Cell Simulator for Multicellu-  #
+#     lar Systems, PLoS Comput. Biol. 14(2): e1005991, 2018                   #
+#     DOI: 10.1371/journal.pcbi.1005991                                       #
+#                                                                             #
+# [2] A Ghaffarizadeh, SH Friedman, and P Macklin, BioFVM: an efficient para- #
+#     llelized diffusive transport solver for 3-D biological simulations,     #
+#     Bioinformatics 32(8): 1256-8, 2016. DOI: 10.1093/bioinformatics/btv730  #
+#                                                                             #
+###############################################################################
+#                                                                             #
+# BSD 3-Clause License (see https://opensource.org/licenses/BSD-3-Clause)     #
+#                                                                             #
+# Copyright (c) 2015-2018, Paul Macklin and the PhysiCell Project             #
+# All rights reserved.                                                        #
+#                                                                             #
+# Redistribution and use in source and binary forms, with or without          #
+# modification, are permitted provided that the following conditions are met: #
+#                                                                             #
+# 1. Redistributions of source code must retain the above copyright notice,   #
+# this list of conditions and the following disclaimer.                       #
+#                                                                             #
+# 2. Redistributions in binary form must reproduce the above copyright        #
+# notice, this list of conditions and the following disclaimer in the         #
+# documentation and/or other materials provided with the distribution.        #
+#                                                                             #
+# 3. Neither the name of the copyright holder nor the names of its            #
+# contributors may be used to endorse or promote products derived from this   #
+# software without specific prior written permission.                         #
+#                                                                             #
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" #
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE   #
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE  #
+# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE   #
+# LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR         #
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF        #
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS    #
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN     #
+# CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)     #
+# ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE  #
+# POSSIBILITY OF SUCH DAMAGE.                                                 #
+#                                                                             #
+###############################################################################
+*/
+--> 
+
+<!--
+<user_details />
+-->
+
+<PhysiCell_settings version="devel-version">
+	<domain>
+		<x_min>0</x_min>
+		<x_max>600</x_max>
+		<y_min>0</y_min>
+		<y_max>600</y_max>
+		<z_min>-10</z_min>
+		<z_max>10</z_max>
+		<dx>40</dx>
+		<dy>40</dy>
+		<dz>40</dz>
+		<use_2D>true</use_2D>
+	</domain>
+	
+	<overall>
+	<max_time units="min">57600</max_time>
+    <diffusion_dt units="min">2.0</diffusion_dt> <!-- Faster simulation -->
+	<mechanics_time_step units="min">5.0</mechanics_time_step>
+    <time_units>min</time_units>
+    <space_units>micron</space_units>
+	</overall>
+
+	
+	<parallel>
+		<omp_num_threads>4</omp_num_threads>
+	</parallel> 
+	
+	<save>
+		<folder>.</folder> <!-- use . for root --> 
+
+		<full_data>
+			<interval units="min">2880</interval>
+			<enable>true</enable>
+		</full_data>
+		
+		<SVG>
+			<interval units="min">2880</interval>
+			<enable>true</enable>
+		</SVG>
+		
+		<legacy_data>
+			<enable>true</enable>
+		</legacy_data>
+	</save>
+	
+	
+	
+	<visualization>
+		<custom_data_index>4</custom_data_index>
+		<blue_value>0</blue_value>
+		<yellow_value>1</yellow_value>
+	</visualization>
+	
+	
+	<!-- parse automaticvally in PhysiCell_settings --> 
+	<microenvironment_setup>
+		<variable name="oxygen" units="mmHg" ID="0">
+			<physical_parameter_set>
+				<diffusion_coefficient units="micron^2/min">100000.000000</diffusion_coefficient>
+				<decay_rate units="1/min">.1</decay_rate>  <!-- 1 for cells  --> 
+			</physical_parameter_set>
+			<initial_condition units="mmHg">38</initial_condition>
+			<Dirichlet_boundary_condition units="mmHg" enabled="true">10</Dirichlet_boundary_condition>
+		</variable>
+		
+		<!-- overwrite NP1 with Preform NP (spherical) in void setup_microenvironment()-nanobio.cpp, diffusion_coefficient and decay rates -->
+		<variable name="NP1" units="dimensionless" ID="1">
+			<physical_parameter_set>
+				<diffusion_coefficient units="micron^2/min">6</diffusion_coefficient>
+				<decay_rate units="1/min">1.0e-06</decay_rate>  <!-- == degradation_rate = 1.0 / (1e-17 + survival_lifetime), also overwrite in .cpp -->
+			</physical_parameter_set>
+			<initial_condition units="dimensionless">0</initial_condition>
+			<Dirichlet_boundary_condition units="1/micron^3" enabled="TRUE">1.0</Dirichlet_boundary_condition>
+		</variable>		
+	
+		<options>
+			<calculate_gradients>false</calculate_gradients>
+			<track_internalized_substrates_in_each_agent>true</track_internalized_substrates_in_each_agent>
+			<!-- not yet supported --> 
+			<initial_condition type="matlab" enabled="false">
+				<filename>./config/initial.mat</filename>
+			</initial_condition>
+			<!-- not yet supported --> 
+			<dirichlet_nodes type="matlab" enabled="false">
+				<filename>./config/dirichlet.mat</filename>
+			</dirichlet_nodes>
+		</options>
+	</microenvironment_setup>	
+	
+	
+	
+	
+	<user_parameters>
+		<random_seed type="int" units="dimensionless" description="Initialize the random number generator">0</random_seed> 
+		<!-- example parameters from the template --> 
+		
+		<tumor_radius type="double" units="micron" description="Initial tumor radius">300</tumor_radius>
+		
+	
+		<!-- untreated cell parameters !!!!!!!!!!! --> 
+<div_background type="divider" description="---Background phenotype (without drug effect)---"/>
+		
+		<oxygen_uptake_rate type="double" units="1/min" description="Uptake rate of oxygen">10</oxygen_uptake_rate>
+		<oxygen_secretion_rate type="double" units="1/min" hidden="true">0</oxygen_secretion_rate>
+		<oxygen_saturation_density type="double" units="" hidden="true">38.0</oxygen_saturation_density>
+		<NP1_uptake_rate type="double" units="1/min" hidden="true">0.2</NP1_uptake_rate>
+		<NP1_secretion_rate type="double" units="1/min" hidden="true">0</NP1_secretion_rate>
+		<NP1_saturation_density type="double" units="" hidden="true">0.0</NP1_saturation_density>
+		
+		<!-- cycle -->
+		<max_birth_rate type="double" units="1/min" description="Maximum birth rate">0.0003</max_birth_rate> <!-- 0.00072 -->
+		<o2_proliferation_saturation type="double" units="mmHg" description="Oxygen value above which the proliferation rate is maximized">38</o2_proliferation_saturation>
+		<o2_proliferation_threshold type="double" units="mmHg" description="Oxygen value below which the proliferation ceases">5</o2_proliferation_threshold> 
+		<o2_reference type="double" units="mmHg" description="Oxygen value that corresponds to the reference phenotype">38</o2_reference> 
+		
+		
+		<!-- necrosis -->
+		<max_necrosis_rate type="double" units="1/min" description="Maximum necrosis rate">0.0027777777777778</max_necrosis_rate>   <!-- 0.0027777777777778 -->
+		<o2_necrosis_threshold type="double" units="mmHg" description="Oxygen value at which necrosis starts">5</o2_necrosis_threshold>
+		<o2_necrosis_max type="double" units="mmHg" description="Oxygen value at which necrosis reaches its maximum rate">2.5</o2_necrosis_max> 
+		
+		<!-- apoptosis -->
+		<apoptosis_rate type="double" units="1/min" description="Tumor background apoptosis rate">0.0005</apoptosis_rate> <!-- 5.316666666666667e-5 -->
+
+				
+		<!-- motility -->
+		<is_motile type="bool" units="none" description="Boolean variable that used to enable or disable cell motility">false</is_motile>
+		<bias type="double" units="none" description="Set the degree to which cell motility is biased along migration bias direction">0.25</bias>
+		<gradient_substrate_index type="int" units="none" description="The substrate index used for chemotaxis (0:NP1)">0</gradient_substrate_index>
+			<!-- which substrate do we use for chemotaxis? -->
+		<negative_taxis type="bool" units="none" description="Boolean variable that used to determine if go along grad(substrate[index])">false</negative_taxis>
+			<!-- true if we go along -grad(substrate[index]) --> 
+		<speed type="double" units="micron/min" description="Speed of motility">1.1</speed>
+		<persistence_time type="double" units="min" description="Mean time cell continues at its current speed and direction before sampling the environment to choose a new motility direction">10.0</persistence_time>
+		
+		
+		<!-- mechanics -->
+		<max_relative_adhesion_distance type="double" units="none" description="Maximum distance of cell adhesion to other cells or a basement membrane (relative to cell radius)">1.5</max_relative_adhesion_distance>
+		<adhesion_strength type="double" units="none" description="Strength used to change cell-cell adhesive forces">0.4</adhesion_strength>
+		<repulsion_strength type="double" units="none" description="Strength used to change cell-cell repulsion forces">10</repulsion_strength>
+		
+		
+
+        <!-- Add nanoparticles parameters here !!!!!!!!!!! --> 
+<div_modelpara type="divider" description="---Model parameters---"/>
+
+		<effect_model type="int" units="none" description="Which treatment model used (0: Simple or 1: AUC)">1</effect_model>
+			<!-- 0: simple (conc), 1: intermediate (AUC), 2: details (activation and deactivation) -->
+		<EC_50 type="double" units="none" description="Drug value that gives 50% of max effect">0.025</EC_50>
+		<Hill_power type="double" units="none" description="Power used in the hill function for calculating drug effect">1.5</Hill_power>
+
+	    <!-- cell-level -->
+        <enable_active_influx type="bool" units="none" description="Boolean variable used to enable or disable active model for uptaking NPs">true</enable_active_influx>
+		<relative_max_internal_concentration type="double" units="dimensionless" description="Max ratio of internal concentration and reference external concentration for NPs">5</relative_max_internal_concentration>
+			<!-- R = max internal concentration / reference external concentration --> 
+		<internalization_rate type="double" units="1/min" description="NPs internalization rate">0.01</internalization_rate> <!-- 2 hours to reach half max -->
+		    <!-- ln(2) / time to reach half max internal concentration --> 
+		<reference_external_concentration type="double" units="dimensionless" description="Reference external NPs concentration">2</reference_external_concentration>
+
+		<!-- enabled_responses -->
+		<cycle type="bool" units="none" description="Boolean variable for enable or disable cycle">true</cycle>
+		<apoptosis type="bool" units="none" description="Boolean variable for enable or disable apoptosis">true</apoptosis>
+		<motility type="bool" units="none" description="Boolean variable for enable or disable motility">false</motility>
+		<mechanics type="bool" units="none" description="Boolean variable for enable or disable mechanics">true</mechanics>
+		<secretion type="bool" units="none" description="Boolean variable for enable or disable secretion">false</secretion>
+
+
+
+		<!-- cell response with the NPs or drug !!!!!!!!!!!!!!!!!!!!!!!-->
+<div_response type="divider" description="---Maximum drug-induced phenotypic response---"/>
+		
+		<!-- cycle -->
+		<treat_max_birth_rate type="double" units="1/min" description="Max drug effect on maximum birth rate">0.00009</treat_max_birth_rate> <!-- 0.00072 -->
+		<treat_o2_proliferation_saturation type="double" units="mmHg" description="Max drug effect on oxygen value above which the proliferation rate is maximized">38</treat_o2_proliferation_saturation>
+		<treat_o2_proliferation_threshold type="double" units="mmHg" description="Max drug effect on oxygen value below which the proliferation ceases">5</treat_o2_proliferation_threshold> 
+		<treat_o2_reference type="double" units="mmHg" description="Max drug effect on oxygen value that corresponds to the reference phenotype">38</treat_o2_reference> 
+		
+		
+		<!-- necrosis -->
+		<treat_max_necrosis_rate type="double" units="1/min" description="Max drug effect on maximum necrosis rate">0.0027777777777778</treat_max_necrosis_rate>   <!-- 0.0027777777777778 -->
+		<treat_o2_necrosis_threshold type="double" units="mmHg" description="Max drug effect on oxygen value at which necrosis starts">5</treat_o2_necrosis_threshold>
+		<treat_o2_necrosis_max type="double" units="mmHg" description="Max drug effect on oxygen value at which necrosis reaches its maximum rate">2.5</treat_o2_necrosis_max> 
+		
+		<!-- apoptosis -->
+		<treat_apoptosis_rate type="double" units="1/min" description="Max drug effect on tumor apoptosis rate">0.004</treat_apoptosis_rate> <!-- 0.001 -->
+
+				
+		<!-- motility -->
+		<treat_is_motile type="bool" units="none" description="Max drug effect on boolean variable that used to enable or disable cell motility">true</treat_is_motile>
+		<treat_bias type="double" units="none" description="Max drug effect on set the degree to which cell motility is biased along migration bias direction">0.25</treat_bias>
+		<treat_gradient_substrate_index type="int" units="none" description="Max drug effect on the substrate index used for chemotaxis (0:NP1)">0</treat_gradient_substrate_index>
+			<!-- which substrate do we use for chemotaxis? -->
+		<treat_negative_taxis type="bool" units="none" description="Max drug effect on boolean variable that used to determine if go along grad(substrate[index])">false</treat_negative_taxis>
+			<!-- true if we go along -grad(substrate[index]) --> 
+		<treat_speed type="double" units="micron/min" description="Max drug effect on speed of motility">1.1</treat_speed>
+		<treat_persistence_time type="double" units="min" description="Max drug effect on mean time cell continues at its current speed and direction before sampling the environment to choose a new motility direction">10.0</treat_persistence_time>
+		
+		<!-- mechanics -->
+		<treat_max_relative_adhesion_distance type="double" units="none" description="Max drug effect on maximum distance of cell adhesion to other cells or a basement membrane (relative to cell radius)">1.5</treat_max_relative_adhesion_distance>
+		<treat_adhesion_strength type="double" units="none" description="Max drug effect on strength used to change cell-cell adhesive forces">0.4</treat_adhesion_strength>
+		<treat_repulsion_strength type="double" units="none" description="Max drug effect on strength used to change cell-cell repulsion forces">10</treat_repulsion_strength>
+
+        <!-- secretion -->
+		<treat_oxygen_uptake_rate type="double" units="1/min" description="Max drug effect on uptake rate of oxygen">10</treat_oxygen_uptake_rate>
+		<treat_oxygen_secretion_rate type="double" units="1/min" hidden="true">0</treat_oxygen_secretion_rate>
+		<treat_oxygen_saturation_density type="double" units="" hidden="true">38.0</treat_oxygen_saturation_density>
+		<treat_NP1_uptake_rate type="double" units="1/min" hidden="true">0.2</treat_NP1_uptake_rate>
+		<treat_NP1_secretion_rate type="double" units="1/min" hidden="true">0</treat_NP1_secretion_rate>
+		<treat_NP1_saturation_density type="double" units="" hidden="true">0.0</treat_NP1_saturation_density>		
+
+		<efflux_rate type="double" units="1/min" description="Rate at which NP1 is cleared from inside the cell">5e-05</efflux_rate>
+
+	</user_parameters>
+	
+</PhysiCell_settings>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

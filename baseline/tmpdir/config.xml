@@ -1,0 +1,210 @@
+<PhysiCell_settings version="devel-version">
+	<domain>
+		<x_min>0.0</x_min>
+		<x_max>1200.0</x_max>
+		<y_min>0.0</y_min>
+		<y_max>1200.0</y_max>
+		<z_min>-10.0</z_min>
+		<z_max>10.0</z_max>
+		<dx>20.0</dx>
+		<dy>20.0</dy>
+		<dz>20.0</dz>
+		<use_2D>true</use_2D>
+	</domain>
+	
+	<overall>
+		<max_time units="min">180.0</max_time> 
+		<time_units>min</time_units>
+		<space_units>micron</space_units>
+	</overall>
+	
+	<parallel>
+		<omp_num_threads>4</omp_num_threads>
+	</parallel> 
+	
+	<save>
+		<folder>.</folder>  
+
+		<full_data>
+			<interval units="min">60.0</interval>
+			<enable>True</enable>
+		</full_data>
+		
+		<SVG>
+			<interval units="min">60.0</interval>
+			<enable>True</enable>
+		</SVG>
+		
+		<legacy_data>
+			<enable>false</enable>
+		</legacy_data>
+	</save>
+	
+	
+	<visualization>
+		<custom_data_index>2</custom_data_index>
+		<blue_value>0</blue_value>
+		<yellow_value>1</yellow_value>
+	</visualization>
+	
+	
+	 
+	<microenvironment_setup>
+		<variable ID="0" name="oxygen" units="mmHg">
+			<physical_parameter_set>
+				<diffusion_coefficient units="micron^2/min">100000.0</diffusion_coefficient>
+				<decay_rate units="1/min">0.1</decay_rate>   
+			</physical_parameter_set>
+			<initial_condition units="mmHg">38.0</initial_condition>
+			<Dirichlet_boundary_condition enabled="true" units="mmHg">38.0</Dirichlet_boundary_condition>
+		</variable>
+		
+		
+		<variable ID="1" name="NP1" units="dimensionless">
+			<physical_parameter_set>
+				<diffusion_coefficient units="micron^2/min">6.0</diffusion_coefficient>
+				<decay_rate units="1/min">1.6667e-05</decay_rate>  
+			</physical_parameter_set>
+			<initial_condition units="dimensionless">0.0</initial_condition>
+			<Dirichlet_boundary_condition enabled="true" units="1/micron^3">2.0</Dirichlet_boundary_condition>
+		</variable>		
+	
+		<options>
+			<calculate_gradients>True</calculate_gradients>
+			<track_internalized_substrates_in_each_agent>True</track_internalized_substrates_in_each_agent>
+			 
+			<initial_condition enabled="false" type="matlab">
+				<filename>./config/initial.mat</filename>
+			</initial_condition>
+			 
+			<dirichlet_nodes enabled="false" type="matlab">
+				<filename>./config/dirichlet.mat</filename>
+			</dirichlet_nodes>
+		</options>
+	</microenvironment_setup>	
+	
+	
+	
+	
+	<user_parameters>
+		<random_seed description="Initialize the random number generator" type="int" units="dimensionless">0</random_seed> 
+		 
+		
+		<tumor_radius description="Initial tumor radius" type="double" units="micron">300.0</tumor_radius>
+		
+	
+		 
+<div_background description="---Background phenotype (without drug effect)---" type="divider" />
+		
+		<oxygen_uptake_rate description="Uptake rate of oxygen" type="double" units="1/min">10.0</oxygen_uptake_rate>
+		<oxygen_secretion_rate hidden="true" type="double" units="1/min">0</oxygen_secretion_rate>
+		<oxygen_saturation_density hidden="true" type="double" units="">38.0</oxygen_saturation_density>
+		<NP1_uptake_rate hidden="true" type="double" units="1/min">0</NP1_uptake_rate>
+		<NP1_secretion_rate hidden="true" type="double" units="1/min">0</NP1_secretion_rate>
+		<NP1_saturation_density hidden="true" type="double" units="">0.0</NP1_saturation_density>
+		
+		
+		<max_birth_rate description="Maximum birth rate" type="double" units="1/min">0.00072</max_birth_rate> 
+		<o2_proliferation_saturation description="Oxygen value above which the proliferation rate is maximized" type="double" units="mmHg">38.0</o2_proliferation_saturation>
+		<o2_proliferation_threshold description="Oxygen value below which the proliferation ceases" type="double" units="mmHg">5.0</o2_proliferation_threshold> 
+		<o2_reference description="Oxygen value that corresponds to the reference phenotype" type="double" units="mmHg">38.0</o2_reference> 
+		
+		
+		
+		<max_necrosis_rate description="Maximum necrosis rate" type="double" units="1/min">0.0027777777777778</max_necrosis_rate>   
+		<o2_necrosis_threshold description="Oxygen value at which necrosis starts" type="double" units="mmHg">5.0</o2_necrosis_threshold>
+		<o2_necrosis_max description="Oxygen value at which necrosis reaches its maximum rate" type="double" units="mmHg">2.5</o2_necrosis_max> 
+		
+		
+		<apoptosis_rate description="Tumor background apoptosis rate" type="double" units="1/min">5.316666666666667e-05</apoptosis_rate> 
+
+				
+		
+		<is_motile description="Boolean variable that used to enable or disable cell motility" type="bool" units="none">False</is_motile>
+		<bias description="Set the degree to which cell motility is biased along migration bias direction" type="double" units="none">0.25</bias>
+		<gradient_substrate_index description="The substrate index used for chemotaxis (0:NP1)" type="int" units="none">0</gradient_substrate_index>
+			
+		<negative_taxis description="Boolean variable that used to determine if go along grad(substrate[index])" type="bool" units="none">False</negative_taxis>
+			 
+		<speed description="Speed of motility" type="double" units="micron/min">1.1</speed>
+		<persistence_time description="Mean time cell continues at its current speed and direction before sampling the environment to choose a new motility direction" type="double" units="min">10.0</persistence_time>
+		
+		
+		
+		<max_relative_adhesion_distance description="Maximum distance of cell adhesion to other cells or a basement membrane (relative to cell radius)" type="double" units="none">1.5</max_relative_adhesion_distance>
+		<adhesion_strength description="Strength used to change cell-cell adhesive forces" type="double" units="none">0.4</adhesion_strength>
+		<repulsion_strength description="Strength used to change cell-cell repulsion forces" type="double" units="none">10.0</repulsion_strength>
+		
+		
+
+         
+<div_modelpara description="---Model parameters---" type="divider" />
+
+		<effect_model description="Which treatment model used (0: Simple or 1: AUC)" type="int" units="none">0</effect_model>
+			
+		<EC_50 description="Drug value that gives 50% of max effect" type="double" units="none">20.0</EC_50>
+		<Hill_power description="Power used in the hill function for calculating drug effect" type="double" units="none">2.0</Hill_power>
+
+	    
+        <enable_active_influx description="Boolean variable used to enable or disable active model for uptaking NPs" type="bool" units="none">True</enable_active_influx>
+		<relative_max_internal_concentration description="Max ratio of internal concentration and reference external concentration for NPs" type="double" units="dimensionless">2.0</relative_max_internal_concentration>
+			 
+		<internalization_rate description="NPs internalization rate" type="double" units="1/min">0.0058</internalization_rate> 
+		     
+		<reference_external_concentration description="Reference external NPs concentration" type="double" units="dimensionless">1.0</reference_external_concentration>
+
+		
+		<cycle description="Boolean variable for enable or disable cycle" type="bool" units="none">False</cycle>
+		<apoptosis description="Boolean variable for enable or disable apoptosis" type="bool" units="none">True</apoptosis>
+		<motility description="Boolean variable for enable or disable motility" type="bool" units="none">False</motility>
+		<mechanics description="Boolean variable for enable or disable mechanics" type="bool" units="none">False</mechanics>
+		<secretion description="Boolean variable for enable or disable secretion" type="bool" units="none">False</secretion>
+
+
+
+		
+<div_response description="---Maximum drug-induced phenotypic response---" type="divider" />
+		
+		
+		<treat_max_birth_rate description="Max drug effect on maximum birth rate" type="double" units="1/min">0.00018</treat_max_birth_rate> 
+		<treat_o2_proliferation_saturation description="Max drug effect on oxygen value above which the proliferation rate is maximized" type="double" units="mmHg">38.0</treat_o2_proliferation_saturation>
+		<treat_o2_proliferation_threshold description="Max drug effect on oxygen value below which the proliferation ceases" type="double" units="mmHg">5.0</treat_o2_proliferation_threshold> 
+		<treat_o2_reference description="Max drug effect on oxygen value that corresponds to the reference phenotype" type="double" units="mmHg">38.0</treat_o2_reference> 
+		
+		
+		
+		<treat_max_necrosis_rate description="Max drug effect on maximum necrosis rate" type="double" units="1/min">0.0027777777777778</treat_max_necrosis_rate>   
+		<treat_o2_necrosis_threshold description="Max drug effect on oxygen value at which necrosis starts" type="double" units="mmHg">5.0</treat_o2_necrosis_threshold>
+		<treat_o2_necrosis_max description="Max drug effect on oxygen value at which necrosis reaches its maximum rate" type="double" units="mmHg">2.5</treat_o2_necrosis_max> 
+		
+		
+		<treat_apoptosis_rate description="Max drug effect on tumor apoptosis rate" type="double" units="1/min">0.001</treat_apoptosis_rate> 
+
+				
+		
+		<treat_is_motile description="Max drug effect on boolean variable that used to enable or disable cell motility" type="bool" units="none">True</treat_is_motile>
+		<treat_bias description="Max drug effect on set the degree to which cell motility is biased along migration bias direction" type="double" units="none">0.25</treat_bias>
+		<treat_gradient_substrate_index description="Max drug effect on the substrate index used for chemotaxis (0:NP1)" type="int" units="none">0</treat_gradient_substrate_index>
+			
+		<treat_negative_taxis description="Max drug effect on boolean variable that used to determine if go along grad(substrate[index])" type="bool" units="none">False</treat_negative_taxis>
+			 
+		<treat_speed description="Max drug effect on speed of motility" type="double" units="micron/min">1.1</treat_speed>
+		<treat_persistence_time description="Max drug effect on mean time cell continues at its current speed and direction before sampling the environment to choose a new motility direction" type="double" units="min">10.0</treat_persistence_time>
+		
+		
+		<treat_max_relative_adhesion_distance description="Max drug effect on maximum distance of cell adhesion to other cells or a basement membrane (relative to cell radius)" type="double" units="none">1.5</treat_max_relative_adhesion_distance>
+		<treat_adhesion_strength description="Max drug effect on strength used to change cell-cell adhesive forces" type="double" units="none">0.4</treat_adhesion_strength>
+		<treat_repulsion_strength description="Max drug effect on strength used to change cell-cell repulsion forces" type="double" units="none">10.0</treat_repulsion_strength>
+
+        
+		<treat_oxygen_uptake_rate description="Max drug effect on uptake rate of oxygen" type="double" units="1/min">10.0</treat_oxygen_uptake_rate>
+		<treat_oxygen_secretion_rate hidden="true" type="double" units="1/min">0</treat_oxygen_secretion_rate>
+		<treat_oxygen_saturation_density hidden="true" type="double" units="">38.0</treat_oxygen_saturation_density>
+		<treat_NP1_uptake_rate hidden="true" type="double" units="1/min">0</treat_NP1_uptake_rate>
+		<treat_NP1_secretion_rate hidden="true" type="double" units="1/min">0</treat_NP1_secretion_rate>
+		<treat_NP1_saturation_density hidden="true" type="double" units="">0.0</treat_NP1_saturation_density>		
+
+
+	</user_parameters>
+	
+</PhysiCell_settings>
