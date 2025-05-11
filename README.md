@@ -49,9 +49,9 @@ Drug effects were modeled either by:
 
 ##  Poster
 
-This project culminated in an academic poster presentation. View below:
+This project culminated in an academic poster presentation. View above : POSTER file and the Therapy_Progress.pdf
 
-![Poster Preview](POSTER.png)
+
 
 ---
 
@@ -63,7 +63,7 @@ This project culminated in an academic poster presentation. View below:
 | `metronomic/`       | Metronomic therapy setup & outputs         |
 | `single_high_dose/` | Single-dose simulation & outputs           |
 | `Advance_therapu/`  | Adaptive therapy simulation code & data    |
-| `Paul.pdf`          | Framework documentation reference          |
+| `Paul.pdf`          | Paul Macklins paper used for this Study         |
 
 ---
 
