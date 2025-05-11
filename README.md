@@ -21,9 +21,9 @@ To explore biologically realistic nanoparticle drug therapies and determine whic
 
 ---
 
-## ⚙️ Methods
+##  Methods
 
-Implemented using `pc4nanobio`, a high-throughput cancer nanotherapy simulator built on PhysiCell. The model tracks nanoparticle internalization, drug release inside tumor cells, and phenotypic effects on proliferation and apoptosis.The logic for each of the four therapy experiments had to be implemented by editing the exisiting nanobio.cpp and PhysiCell_Settings.xml file from the **pc4nanobio** repository. 
+Implemented using `pc4nanobio`, a high-throughput cancer nanotherapy simulator built on PhysiCell. The model tracks nanoparticle internalization, drug release inside tumor cells, and phenotypic effects on proliferation and apoptosis.The logic for each of the four therapy experiments had to be implemented by editing the exisiting `nanobio.cpp` and `PhysiCell_Settings.xml` file from the `pc4nanobio` repository. 
 
 ### Therapeutic Strategies Simulated:
 
