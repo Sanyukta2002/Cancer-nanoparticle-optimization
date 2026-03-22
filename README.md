@@ -47,7 +47,7 @@ The tumor microenvironment tracked two diffusible substrates governing cell viab
 
 | Strategy            | Outcome |
 |--------------------|--------|
-| **Metronomic **  | Lowest final tumor burden. Sustained low-dose exposure prevented regrowth most effectively. |
+| **Metronomic**  | Lowest final tumor burden. Sustained low-dose exposure prevented regrowth most effectively. |
 | **Adaptive**       | Largest initial tumor (~1,285 cells), greatest % reduction, but stabilized at a higher residual size. |
 | **Baseline**       | Moderate suppression with some regrowth between doses. |
 | **Single High Dose** | Rapid initial kill followed by strong tumor regrowth — worst long-term outcome. |
@@ -55,7 +55,7 @@ The tumor microenvironment tracked two diffusible substrates governing cell viab
 **Key finding:** Frequent low-dose metronomic scheduling outperformed a single aggressive dose, consistent with the hypothesis that sustained NP circulation maintains higher intracellular drug accumulation over time.
 
 ## Repository Structure
-## 📁 Repository Structure
+##  Repository Structure
 
 ```
 Cancer-nanoparticle-optimization/
