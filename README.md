@@ -55,12 +55,16 @@ The tumor microenvironment tracked two diffusible substrates governing cell viab
 **Key finding:** Frequent low-dose metronomic scheduling outperformed a single aggressive dose, consistent with the hypothesis that sustained NP circulation maintains higher intracellular drug accumulation over time.
 
 ## Repository Structure
+## 📁 Repository Structure
+
+```
 Cancer-nanoparticle-optimization/
-├── baseline/ # Baseline therapy simulation files & output
-├── metronomic/ # Metronomic therapy setup & outputs
-├── single_high_dose/ # Single high-dose simulation & outputs
-├── adaptive_therapy/ # Adaptive therapy simulation code & data
-├── POSTER.pptx # Academic poster presented at IU Bloomington
-├── Therapy_Progress.pdf # Simulation output analysis report
-├── Macklin_pc4nanobio_reference.pdf # Reference paper (Wang et al., 2024)
+├── baseline/               # Baseline therapy simulation files & output
+├── metronomic/             # Metronomic therapy setup & outputs
+├── single_high_dose/       # Single high-dose simulation & outputs
+├── adaptive_therapy/       # Adaptive therapy simulation code & data
+├── POSTER.pptx             # Academic poster presented at IU Bloomington
+├── Therapy_Progress.pdf    # Simulation output analysis report
+├── Macklin_pc4nanobio_reference.pdf  # Reference paper (Wang et al., 2024)
 └── README.md
+```
