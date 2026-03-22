@@ -15,7 +15,7 @@ The primary modifications for each experiment were limited to the following core
 
 All other files follow the standard pc4nanobio implementation.
 
-This project uses pc4nanobio, an agent-based modeling framework built on PhysiCell, to simulate four distinct NP therapy strategies on a 3D tumor spheroid over 30 days. The core simulation logic is including therapy scheduling, pharmacodynamic modeling, and adaptive dosing triggers . This was implemented by directly modifying nanobio.cpp and PhysiCell_Settings.xml in the pc4nanobio source.
+This project uses pc4nanobio, an agent-based modeling framework built on PhysiCell, to simulate four distinct NP therapy strategies on a 3D tumor spheroid over 30 days. The core simulation logic is including therapy scheduling, pharmacodynamic modeling, and adaptive dosing triggers . This was implemented by directly modifying nanobio.cpp and PhysiCell_Settings.xml in the pc4nanobio source and adding the therapy logic in the source code.
 
  Question: Which NP delivery schedule achieves the greatest tumor suppression while minimizing regrowth?
 
