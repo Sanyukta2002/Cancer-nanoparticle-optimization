@@ -1,7 +1,7 @@
 **Cancer Nanoparticle Therapy Optimization via PhysiCell Agent-Based Simulation**
 ##  Note on Codebase & Modifications
 
-This project builds upon the [pc4nanobio](https://github.com/PhysiCell-Tools/pc4nanobio) framework, an agent-based modeling extension of PhysiCell.
+This project builds upon the [pc4nanobio](https://github.com/rheiland/pc4nanobio) framework, an agent-based modeling extension of PhysiCell.
 
 Each therapy strategy (`baseline`, `metronomic`, `single_high_dose`, `adaptive_therapy`) retains the original repository structure.  
 
