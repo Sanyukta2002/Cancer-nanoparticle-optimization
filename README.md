@@ -54,7 +54,7 @@ The tumor microenvironment tracked two diffusible substrates governing cell viab
 
 **Key finding:** Frequent low-dose metronomic scheduling outperformed a single aggressive dose, consistent with the hypothesis that sustained NP circulation maintains higher intracellular drug accumulation over time.
 
-## Repository Structure
+
 ##  Repository Structure
 
 ```
