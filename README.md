@@ -7,11 +7,23 @@ This project uses pc4nanobio, an agent-based modeling framework built on PhysiCe
 <img width="1273" height="723" alt="image" src="https://github.com/user-attachments/assets/abe66c96-2590-425b-ac77-127cc7b769c3" />
 Figure 1. Tumor spheroid snapshots across four nanoparticle therapy strategies simulated over 30 days using pc4nanobio (PhysiCell v1.10.4). Each row represents one therapeutic strategy; columns correspond to Days 3, 10, 15, 18, 21, and 30. Blue: viable tumor cells. Orange/Brown: drug-stressed or apoptotic cells. Pill icons indicate active dosing events. In the Adaptive strategy (bottom row), ON/OFF labels denote dynamic therapy activation based on live cell count thresholds (activate at >850 cells, deactivate at <600 cells). Metronomic therapy achieves the greatest tumor reduction by Day 30; Single High Dose shows rapid early kill followed by strong regrowth.
 
+## Drug-Induced Apoptosis Modeling
+
 Drug-induced apoptosis was modeled using two formulations depending on the strategy:
-AUC-based model (Baseline, Metronomic, Adaptive):
-Drug Effect = (AUC ^ HillPower) / (AUC ^ HillPower + EC50 ^ HillPower)
-Instantaneous concentration model (Single High Dose):
-Drug Effect = (C ^ HillPower) / (C ^ HillPower + EC50 ^ HillPower)
+
+### AUC-based model (Baseline, Metronomic, Adaptive)
+
+$$
+\text{Drug Effect} = \frac{AUC^{\text{HillPower}}}{AUC^{\text{HillPower}} + EC50^{\text{HillPower}}}
+$$
+
+### Instantaneous concentration model (Single High Dose)
+
+$$
+\text{Drug Effect} = \frac{C^{\text{HillPower}}}{C^{\text{HillPower}} + EC50^{\text{HillPower}}}
+$$
+
+
 
 Key Parameters by Strategy
 ParameterBaselineMetronomicSingle High DoseAdaptiveEC500.10.150.150.025Hill Power1.51.51.81.5Initial Tumor Size~571 cells~571 cells~571 cells~1,285 cellsSimulation Duration25 days25 days25 days40 days
