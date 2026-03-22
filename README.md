@@ -23,12 +23,44 @@ $$
 \text{Drug Effect} = \frac{C^{\text{HillPower}}}{C^{\text{HillPower}} + EC50^{\text{HillPower}}}
 $$
 
+## Key Parameters by Strategy
+
+| Parameter               | Baseline | Metronomic | Single High Dose | Adaptive      |
+|------------------------|----------|------------|------------------|--------------|
+| EC50                   | 0.1      | 0.15       | 0.15             | 0.025        |
+| Hill Power             | 1.5      | 1.5        | 1.8              | 1.5          |
+| Initial Tumor Size     | ~571 cells | ~571 cells | ~571 cells       | ~1,285 cells |
+| Simulation Duration    | 25 days  | 25 days    | 25 days          | 40 days      |
 
 
-Key Parameters by Strategy
-ParameterBaselineMetronomicSingle High DoseAdaptiveEC500.10.150.150.025Hill Power1.51.51.81.5Initial Tumor Size~571 cells~571 cells~571 cells~1,285 cellsSimulation Duration25 days25 days25 days40 days
+## Microenvironment
 
-Microenvironment
 The tumor microenvironment tracked two diffusible substrates governing cell viability and drug response:
-SubstrateRoleDiffusion Coeff. (μm²/min)Decay Rate (/min)Boundary ConditionOxygen (O₂)Supports viability1×10⁵0.1Constant DirichletNanoparticle (NP1)Triggers apoptosis via internalization1×10³0.001Dirichlet during therapy events
-Hypoxia in the spheroid core triggers necrosis; NP internalization drives apoptosis through the advance_internalization() function using a bin-based transit model for intracellular drug release.
+
+| Substrate            | Role                                   | Diffusion Coeff. (μm²/min) | Decay Rate (/min) | Boundary Condition              |
+|---------------------|----------------------------------------|----------------------------|-------------------|---------------------------------|
+| Oxygen (O₂)         | Supports viability                     | 1×10⁵                      | 0.1               | Constant Dirichlet              |
+| Nanoparticle (NP1)  | Triggers apoptosis via internalization | 1×10³                      | 0.001             | Dirichlet during therapy events |
+
+
+## Results
+
+| Strategy            | Outcome |
+|--------------------|--------|
+| **Metronomic **  | Lowest final tumor burden. Sustained low-dose exposure prevented regrowth most effectively. |
+| **Adaptive**       | Largest initial tumor (~1,285 cells), greatest % reduction, but stabilized at a higher residual size. |
+| **Baseline**       | Moderate suppression with some regrowth between doses. |
+| **Single High Dose** | Rapid initial kill followed by strong tumor regrowth — worst long-term outcome. |
+
+**Key finding:** Frequent low-dose metronomic scheduling outperformed a single aggressive dose, consistent with the hypothesis that sustained NP circulation maintains higher intracellular drug accumulation over time.
+
+## Repository Structure
+Cancer-nanoparticle-optimization/
+├── baseline/ # Baseline therapy simulation files & output
+├── metronomic/ # Metronomic therapy setup & outputs
+├── single_high_dose/ # Single high-dose simulation & outputs
+├── adaptive_therapy/ # Adaptive therapy simulation code & data
+├── POSTER.pptx # Academic poster presented at IU Bloomington
+├── Therapy_Progress.pdf # Simulation output analysis report
+├── Macklin_pc4nanobio_reference.pdf # Reference paper (Wang et al., 2024)
+└── README.md
